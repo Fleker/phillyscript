@@ -1,5 +1,7 @@
 boul Bird {}
 
+boul Duck <- Bird {}
+
 fun demo {
     return 1
 }

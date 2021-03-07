@@ -4,6 +4,7 @@ export type AstType =
   'NEWLINE' |
   'SPACE' |
   'CLASS' |
+  'CLASS_EXTENSION' |
   'CLASS_INSTANTIATION' |
   'CLOSE_CURLY' |
   'FUNCTION_NOPARAM' |

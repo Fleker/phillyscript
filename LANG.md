@@ -48,3 +48,15 @@ If there are no parameters in the class constructor, you can use the simpler
 ```
 jawn duck @ Bird
 ```
+
+### Extending
+
+The leftwards arrow syntax is used to state the inheritance between classes.
+
+```
+boul Bird {}
+
+boul Duck <- Bird {}
+
+boul Mallard <- Duck {}
+```

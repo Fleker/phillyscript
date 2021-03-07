@@ -29,6 +29,9 @@ grammar
     this.reject = true
     gCol++
   }, [])
+  .addRule(R.classExtension, (lexeme: string, ...ops: Op[]) => {
+    return ['CLASS_EXTENSION', ...ops]
+  })
   .addRule(R.classDeclaration, (lexeme: string, ...ops: Op[]) => {
     return ['CLASS', ...ops]
   })
@@ -99,6 +102,13 @@ export const parse = (tokens: Op[]) => {
         val: consume(),
       })
     },
+    CLASS_EXTENSION: () => {
+      ast.push({
+        type: 'CLASS_EXTENSION',
+        var: consume(),
+        val: consume(),
+      })
+    },
     CLASS_INSTANTIATION: () => {
       ast.push({
         type: 'CLASS_INSTANTIATION',
@@ -162,6 +172,9 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     CLASS: (leaf: AstLeaf) => {
       return `class ${leaf.val} {`
+    },
+    CLASS_EXTENSION: (leaf: AstLeaf) => {
+      return `class ${leaf.var} extends ${leaf.val} {`
     },
     CLASS_INSTANTIATION: (leaf: AstLeaf) => {
       return `const ${leaf.var} = new ${leaf.val}()`
