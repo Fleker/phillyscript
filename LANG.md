@@ -39,3 +39,12 @@ boul Bird {
 
 }
 ```
+
+### Instantiation
+
+If there are no parameters in the class constructor, you can use the simpler
+`@` syntax
+
+```
+jawn duck @ Bird
+```

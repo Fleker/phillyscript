@@ -3,6 +3,7 @@ export type Token =
   'NEWLINE' |
   'SPACE' |
   'CLASS' |
+  'CLASS_INSTANTIATION' |
   'CLOSE_CURLY' |
   'FUNCTION_NOPARAM' |
   'METHOD' |

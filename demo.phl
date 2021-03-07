@@ -6,4 +6,5 @@ fun demo {
 
 jawn x = 1
 jawn y = 2
+jawn z @ Bird
 console.log(x)

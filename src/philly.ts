@@ -32,6 +32,9 @@ grammar
   .addRule(R.classDeclaration, (lexeme: string, ...ops: Op[]) => {
     return ['CLASS', ...ops]
   })
+  .addRule(R.classInstantiation, (lexeme: string, ...ops: Op[]) => {
+    return ['CLASS_INSTANTIATION', ...ops]
+  })
   .addRule(R.closeCurly, () => {
     return 'CLOSE_CURLY'
   }, [])
@@ -96,6 +99,13 @@ export const parse = (tokens: Op[]) => {
         val: consume(),
       })
     },
+    CLASS_INSTANTIATION: () => {
+      ast.push({
+        type: 'CLASS_INSTANTIATION',
+        var: consume(),
+        val: consume(),
+      })
+    },
     CLOSE_CURLY: () => {
       ast.push({
         type: 'CLOSE_CURLY',
@@ -152,6 +162,9 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     CLASS: (leaf: AstLeaf) => {
       return `class ${leaf.val} {`
+    },
+    CLASS_INSTANTIATION: (leaf: AstLeaf) => {
+      return `const ${leaf.var} = new ${leaf.val}()`
     },
     CLOSE_CURLY: () => {
       return '}'
