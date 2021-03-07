@@ -37,7 +37,7 @@ grammar
     return "EOF"
   })
 
-const lex = (program: string) => {
+export const lex = (program: string) => {
   const lexer = grammar.setInput(program)
   const tokens = []
   let token
@@ -56,7 +56,7 @@ const lex = (program: string) => {
  */
 type Parsers = Record<Token, () => void>
 
-const parse = (tokens: Op[]) => {
+export const parse = (tokens: Op[]) => {
 
   let c = 0;
 
@@ -98,7 +98,7 @@ const parse = (tokens: Op[]) => {
 
 type Transpilers = Record<AstType, (leaf: AstLeaf) => string>
 
-const transpile = (ast: AstLeaf[]) => {
+export const transpile = (ast: AstLeaf[]) => {
   let transpilation = ''
   const transpilers: Transpilers = {
     NEWLINE: () => {
@@ -116,13 +116,3 @@ const transpile = (ast: AstLeaf[]) => {
   })
   return transpilation
 };
-
-const program = `
-jawn x = 1
-jawn y = 2
-console.log(x)
-`
-
-// console.log(lex(program))
-// console.log(parse(lex(program)))
-console.log(transpile(parse(lex(program))))
