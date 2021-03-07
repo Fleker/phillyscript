@@ -5,6 +5,7 @@
   "main": "philly.js",
   "scripts": {
     "build": "tsc",
+    "build-demo": "yarn build && yarn demo",
     "demo": "bash demo.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

@@ -26,3 +26,16 @@ fun simple {
     return 5
 }
 ```
+
+## Class declarations
+
+Classes are known as 'bouls' in PhillyScript. Declaring one is otherwise
+the same.
+
+For good code style, classes must start with a capital letter.
+
+```
+boul Bird {
+
+}
+```

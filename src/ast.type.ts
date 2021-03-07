@@ -3,6 +3,7 @@ import { Op } from "./lex.type";
 export type AstType =
   'NEWLINE' |
   'SPACE' |
+  'CLASS' |
   'CLOSE_CURLY' |
   'FUNCTION_NOPARAM' |
   'METHOD' |

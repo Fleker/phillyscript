@@ -2,6 +2,7 @@ export type Token =
   'EOF' |
   'NEWLINE' |
   'SPACE' |
+  'CLASS' |
   'CLOSE_CURLY' |
   'FUNCTION_NOPARAM' |
   'METHOD' |

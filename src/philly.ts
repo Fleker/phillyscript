@@ -29,6 +29,9 @@ grammar
     this.reject = true
     gCol++
   }, [])
+  .addRule(R.classDeclaration, (lexeme: string, ...ops: Op[]) => {
+    return ['CLASS', ...ops]
+  })
   .addRule(R.closeCurly, () => {
     return 'CLOSE_CURLY'
   }, [])
@@ -87,6 +90,12 @@ export const parse = (tokens: Op[]) => {
         val: '\n'
       })
     },
+    CLASS: () => {
+      ast.push({
+        type: 'CLASS',
+        val: consume(),
+      })
+    },
     CLOSE_CURLY: () => {
       ast.push({
         type: 'CLOSE_CURLY',
@@ -140,6 +149,9 @@ export const transpile = (ast: AstLeaf[]) => {
   const transpilers: Transpilers = {
     NEWLINE: () => {
       return '\n'
+    },
+    CLASS: (leaf: AstLeaf) => {
+      return `class ${leaf.val} {`
     },
     CLOSE_CURLY: () => {
       return '}'
