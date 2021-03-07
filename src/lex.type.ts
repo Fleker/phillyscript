@@ -7,6 +7,7 @@ export type Token =
   'CLASS_INSTANTIATION' |
   'CLOSE_CURLY' |
   'FUNCTION_NOPARAM' |
+  'INSTANCEOF' |
   'METHOD' |
   'RETURN' |
   'VAR'

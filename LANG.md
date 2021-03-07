@@ -60,3 +60,21 @@ boul Duck <- Bird {}
 
 boul Mallard <- Duck {}
 ```
+
+### Instanceof
+
+The `instanceof` operation has been replaced with the tilde operator.
+
+```
+boul Bird {}
+
+boul Duck <- Bird {}
+
+jawn z @ Bird
+
+// Returns true
+z ~ Bird
+
+// Returns false
+z ~ Duck
+```

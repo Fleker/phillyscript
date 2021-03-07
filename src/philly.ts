@@ -44,6 +44,9 @@ grammar
   .addRule(R.functionNoParam, (lexeme: string, ...ops: Op[]) => {
     return ['FUNCTION_NOPARAM', ...ops]
   })
+  .addRule(R.variableInstanceOf, (lexeme: string, ...ops: Op[]) => {
+    return ['INSTANCEOF', ...ops]
+  })
   .addRule(R.method, (lexeme: string, ...ops: Op[]) => {
     return ['METHOD', ...ops]
   })
@@ -121,6 +124,13 @@ export const parse = (tokens: Op[]) => {
         type: 'CLOSE_CURLY',
       })
     },
+    INSTANCEOF: () => {
+      ast.push({
+        type: 'INSTANCEOF',
+        var: consume(),
+        val: consume(),
+      })
+    },
     SPACE: () => {
       ast.push({
         type: 'SPACE'
@@ -181,6 +191,9 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     CLOSE_CURLY: () => {
       return '}'
+    },
+    INSTANCEOF: (leaf: AstLeaf) => {
+      return `${leaf.var} instanceof ${leaf.val}`
     },
     SPACE: () => {
       return ' '
