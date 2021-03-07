@@ -1,5 +1,11 @@
 // https://blog.mgechev.com/2017/09/16/developing-simple-interpreter-transpiler-compiler-tutorial/
+declare var require: any
 const Lexer = require('lex')
+
+import { Lex, Op } from './lex.type'
+import * as R from './rules'
+import { AstLeaf } from './ast.type';
+
 /**
  * The phase of lexical analysis is responsible for dividing the input string
  * (or stream of characters) of the program into smaller pieces called tokens.
@@ -8,35 +14,30 @@ const Lexer = require('lex')
  * represent and their position in the program. The position is usually used for
  * reporting user friendly errors in case of invalid syntactical constructs. 
  */
-
-const variableDeclaration = new RegExp('jawn ([a-z]) = (.*)')
-const log = new RegExp('console\\.log\\(x\\)')
-const eof = new RegExp('$')
-
-let gRow = 1
-let gCol = 1
-const grammar = new Lexer
+// let gRow = 1
+// let gCol = 1
+const grammar = new Lexer as Lex
 grammar
-  .addRule(/\n/, _ => {
-    gRow++
-    gCol = 1
+  .addRule(/\n/, () => {
+    // gRow++
+    // gCol = 1
     return "NEWLINE"
   })
   .addRule(/./, function() {
     this.reject = true
-    gCol++
+    // gCol++
   })
-  .addRule(variableDeclaration, (lexeme, ...ops) => {
+  .addRule(R.variableDeclaration, (lexeme: string, ...ops: Op[]) => {
     return ["VAR", ...ops]
   })
-  .addRule(log, (lexeme, ...ops) => {
+  .addRule(R.log, (lexeme: string, ...ops: Op[]) => {
     return "LOG"
   })
-  .addRule(eof, function() {
+  .addRule(R.eof, function() {
     return "EOF"
   })
 
-const lex = program => {
+const lex = (program: string) => {
   const lexer = grammar.setInput(program)
   const tokens = []
   let token
@@ -46,10 +47,6 @@ const lex = program => {
   return tokens
 }
 
-const Op = Symbol("Op")
-const Num = Symbol("Num")
-const Var = Symbol("Var")
-
 /**
  * The syntax analyzer (often known as parser) is the module of a compiler
  * which out of a list (or stream) of tokens produces an Abstract Syntax Tree
@@ -57,16 +54,16 @@ const Var = Symbol("Var")
  * produce syntax errors in case of invalid programs.
  *
  */
-const parse = tokens => {
+const parse = (tokens: Op[]) => {
 
   let c = 0;
 
   const peek = () => tokens[c];
   const consume = () => tokens[c++];
 
-  const ast = []
+  const ast: AstLeaf[] = []
 
-  const parsers = {
+  const parsers: any = {
     NEWLINE: () => {
       ast.push({
         type: 'NEWLINE',
@@ -95,13 +92,13 @@ const parse = tokens => {
   return ast
 };
 
-const transpile = ast => {
+const transpile = (ast: AstLeaf[]) => {
   let transpilation = ''
-  const transpilers = {
+  const transpilers: any = {
     NEWLINE: () => {
       return '\n'
     },
-    VAR: (leaf) => {
+    VAR: (leaf: AstLeaf) => {
       return `const ${leaf.var} = ${leaf.val}`
     },
     LOG: () => {
