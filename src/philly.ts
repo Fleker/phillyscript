@@ -2,9 +2,9 @@
 declare var require: any
 const Lexer = require('lex')
 
-import { Lex, Op } from './lex.type'
+import { Lex, Op, Token } from './lex.type'
 import * as R from './rules'
-import { AstLeaf } from './ast.type';
+import { AstLeaf, AstType } from './ast.type';
 
 /**
  * The phase of lexical analysis is responsible for dividing the input string
@@ -30,8 +30,8 @@ grammar
   .addRule(R.variableDeclaration, (lexeme: string, ...ops: Op[]) => {
     return ["VAR", ...ops]
   })
-  .addRule(R.log, (lexeme: string, ...ops: Op[]) => {
-    return "LOG"
+  .addRule(R.method, (lexeme: string, ...ops: Op[]) => {
+    return ["METHOD", ...ops]
   })
   .addRule(R.eof, function() {
     return "EOF"
@@ -54,6 +54,8 @@ const lex = (program: string) => {
  * produce syntax errors in case of invalid programs.
  *
  */
+type Parsers = Record<Token, () => void>
+
 const parse = (tokens: Op[]) => {
 
   let c = 0;
@@ -63,7 +65,7 @@ const parse = (tokens: Op[]) => {
 
   const ast: AstLeaf[] = []
 
-  const parsers: any = {
+  const parsers: Parsers = {
     NEWLINE: () => {
       ast.push({
         type: 'NEWLINE',
@@ -77,32 +79,36 @@ const parse = (tokens: Op[]) => {
         val: consume(),
       })
     },
-    LOG: () => {
+    METHOD: () => {
       ast.push({
-        type: 'LOG',
-        val: '',
+        type: 'METHOD',
+        callee: consume(),
+        method: consume(),
+        params: consume(),
       })
     },
   }
 
   while (peek() !== 'EOF') {
-    parsers[consume()]()
+    parsers[consume() as Token]()
   }
 
   return ast
 };
 
+type Transpilers = Record<AstType, (leaf: AstLeaf) => string>
+
 const transpile = (ast: AstLeaf[]) => {
   let transpilation = ''
-  const transpilers: any = {
+  const transpilers: Transpilers = {
     NEWLINE: () => {
       return '\n'
     },
     VAR: (leaf: AstLeaf) => {
       return `const ${leaf.var} = ${leaf.val}`
     },
-    LOG: () => {
-      return `console.log(x)`
+    METHOD: (leaf: AstLeaf) => {
+      return `${leaf.callee}.${leaf.method}(${leaf.params})`
     },
   }
   ast.forEach(leaf => {

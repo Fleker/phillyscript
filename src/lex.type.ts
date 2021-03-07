@@ -1,4 +1,4 @@
-export type Token = 'NEWLINE' | 'VAR' | 'LOG'
+export type Token = 'NEWLINE' | 'VAR' | 'METHOD'
 
 export type Op = Token | string | number
 
