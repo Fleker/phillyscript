@@ -14,27 +14,41 @@ import { AstLeaf, AstType } from './ast.type';
  * represent and their position in the program. The position is usually used for
  * reporting user friendly errors in case of invalid syntactical constructs. 
  */
-// let gRow = 1
-// let gCol = 1
-const grammar = new Lexer as Lex
+let gRow = 1
+let gCol = 1
+const grammar = new Lexer((char: string) => {
+  throw new Error(`Unexpected character "${char}" at row/col ${gRow}:${gCol}`)
+}) as Lex
 grammar
   .addRule(/\n/, () => {
-    // gRow++
-    // gCol = 1
+    gRow++
+    gCol = 1
     return "NEWLINE"
   })
   .addRule(/./, function() {
     this.reject = true
-    // gCol++
-  })
-  .addRule(R.variableDeclaration, (lexeme: string, ...ops: Op[]) => {
-    return ["VAR", ...ops]
+    gCol++
+  }, [])
+  .addRule(R.closeCurly, () => {
+    return 'CLOSE_CURLY'
+  }, [])
+  .addRule(R.functionNoParam, (lexeme: string, ...ops: Op[]) => {
+    return ['FUNCTION_NOPARAM', ...ops]
   })
   .addRule(R.method, (lexeme: string, ...ops: Op[]) => {
-    return ["METHOD", ...ops]
+    return ['METHOD', ...ops]
   })
-  .addRule(R.eof, function() {
-    return "EOF"
+  .addRule(R.returnStatement, (lexeme: string, ...ops: Op[]) => {
+    return ['RETURN', ...ops]
+  })
+  .addRule(R.variableDeclaration, (lexeme: string, ...ops: Op[]) => {
+    return ['VAR', ...ops]
+  })
+  .addRule(/\s/, () => {
+    return 'SPACE'
+  })
+  .addRule(R.eof, () => {
+    return 'EOF'
   })
 
 export const lex = (program: string) => {
@@ -66,16 +80,26 @@ export const parse = (tokens: Op[]) => {
   const ast: AstLeaf[] = []
 
   const parsers: Parsers = {
+    EOF: () => {},
     NEWLINE: () => {
       ast.push({
         type: 'NEWLINE',
         val: '\n'
       })
     },
-    VAR: () => {
+    CLOSE_CURLY: () => {
       ast.push({
-        type: 'VAR',
-        var: consume(),
+        type: 'CLOSE_CURLY',
+      })
+    },
+    SPACE: () => {
+      ast.push({
+        type: 'SPACE'
+      })
+    },
+    FUNCTION_NOPARAM: () => {
+      ast.push({
+        type: 'FUNCTION_NOPARAM',
         val: consume(),
       })
     },
@@ -85,6 +109,19 @@ export const parse = (tokens: Op[]) => {
         callee: consume(),
         method: consume(),
         params: consume(),
+      })
+    },
+    RETURN: () => {
+      ast.push({
+        type: 'RETURN',
+        val: consume(),
+      })
+    },
+    VAR: () => {
+      ast.push({
+        type: 'VAR',
+        var: consume(),
+        val: consume(),
       })
     },
   }
@@ -104,11 +141,23 @@ export const transpile = (ast: AstLeaf[]) => {
     NEWLINE: () => {
       return '\n'
     },
-    VAR: (leaf: AstLeaf) => {
-      return `const ${leaf.var} = ${leaf.val}`
+    CLOSE_CURLY: () => {
+      return '}'
+    },
+    SPACE: () => {
+      return ' '
+    },
+    FUNCTION_NOPARAM: (leaf: AstLeaf) => {
+      return `function ${leaf.val}() {`
     },
     METHOD: (leaf: AstLeaf) => {
       return `${leaf.callee}.${leaf.method}(${leaf.params})`
+    },
+    RETURN: (leaf: AstLeaf) => {
+      return `return ${leaf.val}`
+    },
+    VAR: (leaf: AstLeaf) => {
+      return `const ${leaf.var} = ${leaf.val}`
     },
   }
   ast.forEach(leaf => {

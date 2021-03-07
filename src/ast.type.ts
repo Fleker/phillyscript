@@ -1,6 +1,13 @@
 import { Op } from "./lex.type";
 
-export type AstType = 'NEWLINE' | 'VAR' | 'METHOD'
+export type AstType =
+  'NEWLINE' |
+  'SPACE' |
+  'CLOSE_CURLY' |
+  'FUNCTION_NOPARAM' |
+  'METHOD' |
+  'RETURN' |
+  'VAR'
 
 export interface AstLeaf {
   type: AstType,

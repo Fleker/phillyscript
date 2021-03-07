@@ -1,3 +1,6 @@
+fun demo {
+    return 1
+}
 jawn x = 1
 jawn y = 2
 console.log(x)

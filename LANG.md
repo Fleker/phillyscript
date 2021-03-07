@@ -14,3 +14,15 @@ These jawns are immutable:
 jawn x = 1
 jawn y = 1
 ```
+
+## Function declarations
+
+### Zero-param functions
+
+To reduce boilerplate, functions with zero parameters can omit the parenthesis.
+
+```
+fun simple {
+    return 5
+}
+```
