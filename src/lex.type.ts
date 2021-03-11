@@ -6,11 +6,13 @@ export type Token =
   'CLASS_EXTENSION' |
   'CLASS_INSTANTIATION' |
   'CLOSE_CURLY' |
+  'CLOSE_PARENTH' |
   'FUNCTION_NOPARAM' |
   'INSTANCEOF' |
   'METHOD' |
   'RETURN' |
-  'VAR'
+  'VAR' |
+  'VAR_CALL'
 
 export type Op = Token | string | number
 

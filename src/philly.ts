@@ -41,6 +41,9 @@ grammar
   .addRule(R.closeCurly, () => {
     return 'CLOSE_CURLY'
   }, [])
+  .addRule(R.closeParenth, () => {
+    return 'CLOSE_PARENTH'
+  }, [])
   .addRule(R.functionNoParam, (lexeme: string, ...ops: Op[]) => {
     return ['FUNCTION_NOPARAM', ...ops]
   })
@@ -55,6 +58,9 @@ grammar
   })
   .addRule(R.variableDeclaration, (lexeme: string, ...ops: Op[]) => {
     return ['VAR', ...ops]
+  })
+  .addRule(R.variable, (lexeme: string, ...ops: Op[]) => {
+    return ['VAR_CALL', ...ops]
   })
   .addRule(/\s/, () => {
     return 'SPACE'
@@ -124,6 +130,11 @@ export const parse = (tokens: Op[]) => {
         type: 'CLOSE_CURLY',
       })
     },
+    CLOSE_PARENTH: () => {
+      ast.push({
+        type: 'CLOSE_PARENTH',
+      })
+    },
     INSTANCEOF: () => {
       ast.push({
         type: 'INSTANCEOF',
@@ -147,7 +158,6 @@ export const parse = (tokens: Op[]) => {
         type: 'METHOD',
         callee: consume(),
         method: consume(),
-        params: consume(),
       })
     },
     RETURN: () => {
@@ -161,6 +171,12 @@ export const parse = (tokens: Op[]) => {
         type: 'VAR',
         var: consume(),
         val: consume(),
+      })
+    },
+    VAR_CALL: () => {
+      ast.push({
+        type: 'VAR_CALL',
+        var: consume(),
       })
     },
   }
@@ -192,6 +208,9 @@ export const transpile = (ast: AstLeaf[]) => {
     CLOSE_CURLY: () => {
       return '}'
     },
+    CLOSE_PARENTH: () => {
+      return ')'
+    },
     INSTANCEOF: (leaf: AstLeaf) => {
       return `${leaf.var} instanceof ${leaf.val}`
     },
@@ -202,13 +221,16 @@ export const transpile = (ast: AstLeaf[]) => {
       return `function ${leaf.val}() {`
     },
     METHOD: (leaf: AstLeaf) => {
-      return `${leaf.callee}.${leaf.method}(${leaf.params})`
+      return `${leaf.callee}.${leaf.method}(`
     },
     RETURN: (leaf: AstLeaf) => {
       return `return ${leaf.val}`
     },
     VAR: (leaf: AstLeaf) => {
       return `const ${leaf.var} = ${leaf.val}`
+    },
+    VAR_CALL: (leaf: AstLeaf) => {
+      return `${leaf.var}`
     },
   }
   ast.forEach(leaf => {
