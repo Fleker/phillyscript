@@ -11,8 +11,14 @@ Variables are called `jawn`.
 These jawns are immutable:
 
 ```
-jawn x = 1
-jawn y = 1
+jawn x := 1
+jawn y := 1
+```
+
+Adding an asterisk after `jawn` declares it to be mutable.
+
+```
+jawn* z := 3
 ```
 
 ## Function declarations

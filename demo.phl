@@ -6,8 +6,8 @@ fun demo {
     return 1
 }
 
-jawn x = 1
-jawn y = 2
+jawn x := 1
+jawn* y := 2
 jawn z @ Bird
 console.log(x)
 console.log(z ~ Bird)

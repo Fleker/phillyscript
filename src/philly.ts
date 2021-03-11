@@ -59,6 +59,9 @@ grammar
   .addRule(R.variableDeclaration, (lexeme: string, ...ops: Op[]) => {
     return ['VAR', ...ops]
   })
+  .addRule(R.mutableVariableDeclaration, (lexeme: string, ...ops: Op[]) => {
+    return ['VAR_MUT', ...ops]
+  })
   .addRule(R.variable, (lexeme: string, ...ops: Op[]) => {
     return ['VAR_CALL', ...ops]
   })
@@ -173,6 +176,13 @@ export const parse = (tokens: Op[]) => {
         val: consume(),
       })
     },
+    VAR_MUT: () => {
+      ast.push({
+        type: 'VAR_MUT',
+        var: consume(),
+        val: consume(),
+      })
+    },
     VAR_CALL: () => {
       ast.push({
         type: 'VAR_CALL',
@@ -228,6 +238,9 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     VAR: (leaf: AstLeaf) => {
       return `const ${leaf.var} = ${leaf.val}`
+    },
+    VAR_MUT: (leaf: AstLeaf) => {
+      return `let ${leaf.var} = ${leaf.val}`
     },
     VAR_CALL: (leaf: AstLeaf) => {
       return `${leaf.var}`

@@ -13,6 +13,7 @@ export type AstType =
   'METHOD' |
   'RETURN' |
   'VAR' |
+  'VAR_MUT' |
   'VAR_CALL'
 
 export interface AstLeaf {

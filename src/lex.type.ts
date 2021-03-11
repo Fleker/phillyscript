@@ -12,6 +12,7 @@ export type Token =
   'METHOD' |
   'RETURN' |
   'VAR' |
+  'VAR_MUT' |
   'VAR_CALL'
 
 export type Op = Token | string | number
