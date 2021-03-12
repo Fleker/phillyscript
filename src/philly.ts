@@ -6,6 +6,10 @@ import { Lex, Op, Token } from './lex.type'
 import * as R from './rules'
 import { AstLeaf, AstType } from './ast.type';
 
+function nullable(arr: any[]) {
+  return arr.map(entry => entry === undefined ? null : entry)
+}
+
 /**
  * The phase of lexical analysis is responsible for dividing the input string
  * (or stream of characters) of the program into smaller pieces called tokens.
@@ -45,22 +49,22 @@ grammar
     return 'CLOSE_PARENTH'
   }, [])
   .addRule(R.functionNoParam, (lexeme: string, ...ops: Op[]) => {
-    return ['FUNCTION_NOPARAM', ...ops]
+    return ['FUNCTION_NOPARAM', ...nullable(ops)]
   })
   .addRule(R.variableInstanceOf, (lexeme: string, ...ops: Op[]) => {
     return ['INSTANCEOF', ...ops]
   })
   .addRule(R.method, (lexeme: string, ...ops: Op[]) => {
-    return ['METHOD', ...ops]
+    return ['METHOD', ...nullable(ops)]
   })
   .addRule(R.returnStatement, (lexeme: string, ...ops: Op[]) => {
     return ['RETURN', ...ops]
   })
   .addRule(R.variableDeclaration, (lexeme: string, ...ops: Op[]) => {
-    return ['VAR', ...ops]
+    return ['VAR', ...nullable(ops)]
   })
   .addRule(R.mutableVariableDeclaration, (lexeme: string, ...ops: Op[]) => {
-    return ['VAR_MUT', ...ops]
+    return ['VAR_MUT', ...nullable(ops)]
   })
   .addRule(R.variable, (lexeme: string, ...ops: Op[]) => {
     return ['VAR_CALL', ...ops]
@@ -153,12 +157,14 @@ export const parse = (tokens: Op[]) => {
     FUNCTION_NOPARAM: () => {
       ast.push({
         type: 'FUNCTION_NOPARAM',
+        method: consume(),
         val: consume(),
       })
     },
     METHOD: () => {
       ast.push({
         type: 'METHOD',
+        var: consume(),
         callee: consume(),
         method: consume(),
       })
@@ -173,6 +179,7 @@ export const parse = (tokens: Op[]) => {
       ast.push({
         type: 'VAR',
         var: consume(),
+        method: consume(),
         val: consume(),
       })
     },
@@ -180,6 +187,7 @@ export const parse = (tokens: Op[]) => {
       ast.push({
         type: 'VAR_MUT',
         var: consume(),
+        method: consume(),
         val: consume(),
       })
     },
@@ -228,18 +236,30 @@ export const transpile = (ast: AstLeaf[]) => {
       return ' '
     },
     FUNCTION_NOPARAM: (leaf: AstLeaf) => {
+      if (leaf.method) {
+        return `async function ${leaf.val}() {`
+      }
       return `function ${leaf.val}() {`
     },
     METHOD: (leaf: AstLeaf) => {
+      if (leaf.var) {
+        return `await ${leaf.callee}.${leaf.method}(`
+      }
       return `${leaf.callee}.${leaf.method}(`
     },
     RETURN: (leaf: AstLeaf) => {
       return `return ${leaf.val}`
     },
     VAR: (leaf: AstLeaf) => {
+      if (leaf.method) {
+        return `const ${leaf.var} = await ${leaf.val}`
+      }
       return `const ${leaf.var} = ${leaf.val}`
     },
     VAR_MUT: (leaf: AstLeaf) => {
+      if (leaf.method) {
+        return `let ${leaf.var} = await ${leaf.val}`
+      }
       return `let ${leaf.var} = ${leaf.val}`
     },
     VAR_CALL: (leaf: AstLeaf) => {

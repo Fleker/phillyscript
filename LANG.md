@@ -33,6 +33,18 @@ fun simple {
 }
 ```
 
+### Async/Await
+
+To reduce boilerplate, the hash operator now signifies that an operation or
+function is asynchronous.
+
+```
+fun# asyncFunction {
+    jawn x := #asyncOperation()
+    return x
+}
+```
+
 ## Class declarations
 
 Classes are known as 'bouls' in PhillyScript. Declaring one is otherwise

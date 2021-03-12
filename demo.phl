@@ -6,6 +6,10 @@ fun demo {
     return 1
 }
 
+fun# asyncDemo {
+    jawn x := #demo()
+}
+
 jawn x := 1
 jawn* y := 2
 jawn z @ Bird

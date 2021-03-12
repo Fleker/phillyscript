@@ -13,16 +13,6 @@ app.get('/', () => {
 })
 ```
 
-## Variables
-
-[ ] Mutable jawns
-[ ] Colon-equals assignment operator
-[ ] Variable destructor operator
-
-```
-jawn x := 1
-```
-
 ## Classes
 
 [ ] Property constructors
@@ -35,7 +25,6 @@ jawn a := Bird({
 
 ## Execution Flow
 
-[ ] Hash syntax for async/await
 [ ] Define execution blocks without function syntax
 [ ] Multiple matches for a conditional
 
