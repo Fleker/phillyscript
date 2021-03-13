@@ -18,7 +18,9 @@ export type AstType =
   'COND_INIT' |
   'COND_MANY_SINGLE_OPERATOR' |
   'COND_MANY_MANY_OPERATOR' |
-  'STATIC_STRING'
+  'STATIC_STRING' |
+  'ATOM_INSTANTIATION' |
+  'ATOM_PRINT'
 
 export interface AstLeaf {
   type: AstType,

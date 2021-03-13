@@ -60,6 +60,9 @@ grammar
   .addRule(R.returnStatement, (lexeme: string, ...ops: Op[]) => {
     return ['RETURN', ...ops]
   })
+  .addRule(R.atomInstantiation, (lexeme: string, ...ops: Op[]) => {
+    return ['ATOM_INSTANTIATION', ...ops]
+  })
   .addRule(R.variableDeclaration, (lexeme: string, ...ops: Op[]) => {
     return ['VAR', ...nullable(ops)]
   })
@@ -80,6 +83,9 @@ grammar
   })
   .addRule(R.staticString, (lexeme: string, ...ops: Op[]) => {
     return ['STATIC_STRING', ...ops]
+  })
+  .addRule(R.atomPrint, (lexeme: string, ...ops: Op[]) => {
+    return ['ATOM_PRINT', ...ops]
   })
   .addRule(/\s/, () => {
     return 'SPACE'
@@ -238,6 +244,19 @@ export const parse = (tokens: Op[]) => {
         method: consume(),
         val: consume(),
       })
+    },
+    ATOM_INSTANTIATION: () => {
+      ast.push({
+        type: 'ATOM_INSTANTIATION',
+        var: consume(),
+        val: consume()
+      })
+    },
+    ATOM_PRINT: () => {
+      ast.push({
+        type: 'ATOM_PRINT',
+        var: consume(),
+      })
     }
   }
 
@@ -321,6 +340,12 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     STATIC_STRING: (leaf: AstLeaf) => {
       return `${leaf.method}${leaf.val}${leaf.method}`
+    },
+    ATOM_INSTANTIATION: (leaf: AstLeaf) => {
+      return `const ${leaf.var} = Symbol.for('${leaf.val}')`
+    },
+    ATOM_PRINT: (leaf: AstLeaf) => {
+      return `Symbol.keyFor(${leaf.var})`
     }
   }
   ast.forEach(leaf => {

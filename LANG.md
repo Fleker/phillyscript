@@ -21,6 +21,21 @@ Adding an asterisk after `jawn` declares it to be mutable.
 jawn* z := 3
 ```
 
+### Symbols
+
+[Symbols](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol)
+are designed to be unique for each creation, even if the input parameter is
+the same.
+
+Rather than using the Symbol static methods, you can use the colon syntax:
+
+```
+// Create a new symbol with value "hello"
+jawn a := :hello
+// Print out the value of the symbol
+console.log(:a:)
+```
+
 ## Function declarations
 
 ### Zero-param functions

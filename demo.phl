@@ -24,3 +24,5 @@ if (x > 0, < 5) {
     console.log('x is in our range')
 }
 
+jawn a := :hello
+console.log(:a:)

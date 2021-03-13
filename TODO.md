@@ -31,25 +31,6 @@ jawn a := Bird({
 jawn y := {
     return 1
 }
-
-if (i == 1, 3, 5) {
-    // Odd
-}
-if (i < 3, > 7) {
-    // Outside our range
-}
-```
-
-## Symbols
-
-[ ] Atom syntax
-[ ] Print symbol key
-
-```
-jawn x := :hello
-// Creates a new symbol of type hello
-console.log(`${ :x: }`)
-// Prints the key of the symbol, which is 'hello'
 ```
 
 ## Mathematic operators
