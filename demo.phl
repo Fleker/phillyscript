@@ -13,54 +13,54 @@ fun# asyncDemo {
 jawn x := 1
 jawn* y := 4
 jawn z @ Bird
-console.log(x)
-console.log(z ~ Bird)
+print(x)
+print(z ~ Bird)
 
 if (y == 2, 4) {
-    console.log('y is one of our values')
+    print('y is one of our values')
 }
 
 if (x > 0, < 5) {
-    console.log('x is in our range')
+    print('x is in our range')
 }
 
 jawn a := :symbolic
-console.log(:a:)
+print(:a:)
 
 jawn b := "Hello World"
-console.log(b[0:5])
-console.log(b[:5])
-console.log(b[6:])
+print(b[0:5])
+print(b[:5])
+print(b[6:])
 
 jawn c := [0, 1, 2, 3]
-console.log(c .+ 1)
-console.log(c .* 5)
+print(c .+ 1)
+print(c .* 5)
 
-console.log('Hello' ≠ 'World')
+print('Hello' ≠ 'World')
 
-console.log(x ≈ 2)
-console.log(x ~10~ 2)
-console.log(y /% 3)
-console.log(5!)
+print(x ≈ 2)
+print(x ~10~ 2)
+print(y /% 3)
+print(5!)
 
 if (maybe) {
-    console.log('This returns true half of the time')
+    print('This returns true half of the time')
 }
 
 if (maybe(0.25)) {
-    console.log('This returns true a quarter of the time')
+    print('This returns true a quarter of the time')
 }
 
-console.log(101 >> 10)
-console.log(60 >4> 20)
-console.log(2 .<< 4)
-console.log(7^2)
-console.log(3 x| 2)
+printl(101 >> 10)
+printl(60 >4> 20)
+printl(2 .<< 4)
+printl(7^2)
+printl(3 x| 2)
 
 for (jawn i = 0:3) {
-    console.log(i)
+    printi(i)
 }
 
 for (jawn i = 0:5:20) {
-    console.log(i)
+    printi(i)
 }

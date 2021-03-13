@@ -145,29 +145,6 @@ if (x ≠ 2) {
 }
 ```
 
-### For-Loops
-
-For-loops get an enhancement to improve the iteration process using an improved
-range syntax:
-
-```
-for (jawn i = 0:3) {
-    // Prints '0', '1', '2'
-    console.log(i)
-}
-```
-
-This iterates the variable `i` from [0-3), with *0* inclusive and *3* exclusive.
-
-This can also be paired with a particular step:
-
-```
-for (jawn i = 0:5:20) {
-    // Prints '0', '5', '10', '15'
-    console.log(i)
-}
-```
-
 #### Estimations
 
 Estimations, two values that would use a wavy equal sign, can be implemented
@@ -215,6 +192,42 @@ However, it can be customized by appending another operand in the middle:
 ```
 // Prints 'false'
 console.log(60 <4< 20)
+```
+
+### For-Loops
+
+For-loops get an enhancement to improve the iteration process using an improved
+range syntax:
+
+```
+for (jawn i = 0:3) {
+    // Prints '0', '1', '2'
+    console.log(i)
+}
+```
+
+This iterates the variable `i` from [0-3), with *0* inclusive and *3* exclusive.
+
+This can also be paired with a particular step:
+
+```
+for (jawn i = 0:5:20) {
+    // Prints '0', '5', '10', '15'
+    console.log(i)
+}
+```
+
+### Interacting with console
+
+The console log operations are now simplified a bit, with `print` being the
+primary way to print something to the console. A suffix can be added based
+on the logging level:
+
+```
+// Prints 'Hello World' to DEBUG level
+print('Hello World')
+// Prints 'Uh-oh' to ERROR level
+printe('Uh-oh')
 ```
 
 ## Operations

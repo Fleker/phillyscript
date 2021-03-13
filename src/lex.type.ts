@@ -34,7 +34,8 @@ export type Token =
   'BITSHIFT' |
   'POWER' |
   'XOR' |
-  'RANGE_LOOP'
+  'RANGE_LOOP' |
+  'PRINT'
 
 export type Op = Token | string | number
 

@@ -54,6 +54,9 @@ grammar
   .addRule(R.variableInstanceOf, (lexeme: string, ...ops: Op[]) => {
     return ['INSTANCEOF', ...ops]
   })
+  .addRule(R.print, (lexeme: string, ...ops: Op[]) => {
+    return ['PRINT', ...nullable(ops)]
+  })
   .addRule(R.method, (lexeme: string, ...ops: Op[]) => {
     return ['METHOD', ...nullable(ops)]
   })
@@ -411,6 +414,12 @@ export const parse = (tokens: Op[]) => {
         val: consume(),
       })
     },
+    PRINT: () => {
+      ast.push({
+        type: 'PRINT',
+        method: consume(),
+      })
+    },
   }
 
   while (peek() !== 'EOF') {
@@ -573,6 +582,22 @@ export const transpile = (ast: AstLeaf[]) => {
     RANGE_LOOP: (leaf: AstLeaf) => {
       // Right now we assume start < finish
       return `for (let ${leaf.var} = ${leaf.callee}; ${leaf.var} < ${leaf.val}; ${leaf.var} += ${leaf.method || 1}) {`
+    },
+    PRINT: (leaf: AstLeaf) => {
+      const methods: Record<string, string> = {
+        d: 'debug',
+        l: 'log',
+        i: 'info',
+        w: 'warn',
+        e: 'error',
+      }
+      const method = (() => {
+        if (leaf.method) {
+          return methods[leaf.method]
+        }
+        return 'debug'
+      })()
+      return `console.${method}(`
     }
   }
   ast.forEach(leaf => {

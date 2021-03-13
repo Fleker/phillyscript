@@ -26,7 +26,6 @@ jawn a := Bird({
 ## Execution Flow
 
 [ ] Define execution blocks without function syntax
-[ ] Print => console.logs
 
 ```
 jawn y := {

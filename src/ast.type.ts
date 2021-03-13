@@ -35,7 +35,8 @@ export type AstType =
   'BITSHIFT' |
   'POWER' |
   'XOR' |
-  'RANGE_LOOP'
+  'RANGE_LOOP' |
+  'PRINT'
 
 export interface AstLeaf {
   type: AstType,
