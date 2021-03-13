@@ -40,3 +40,11 @@ console.log(x ≈ 2)
 console.log(x ~10~ 2)
 console.log(y /% 3)
 console.log(5!)
+
+if (maybe) {
+    console.log('This returns true half of the time')
+}
+
+if (maybe(0.25)) {
+    console.log('This returns true a quarter of the time')
+}

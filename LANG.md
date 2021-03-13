@@ -161,6 +161,21 @@ if (x ~10~ 6) {
 }
 ```
 
+#### Random
+
+The `maybe` keyword is used to randomly return true for a given weight, with
+the default being half of the time.
+
+```
+if (maybe) {
+    console.log('This returns true half of the time')
+}
+
+if (maybe(0.25)) {
+    console.log('This returns true a quarter of the time')
+}
+```
+
 ## Operations
 
 ### Division with Remainder

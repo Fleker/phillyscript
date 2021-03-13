@@ -27,7 +27,9 @@ export type AstType =
   'ESTIMATE' |
   'ESTIMATE_PRECISE' |
   'DIV_REMAIN' |
-  'FACTORIAL'
+  'FACTORIAL' |
+  'MAYBE' |
+  'MAYBE_WEIGHTED'
 
 export interface AstLeaf {
   type: AstType,

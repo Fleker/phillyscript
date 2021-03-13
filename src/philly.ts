@@ -108,6 +108,12 @@ grammar
   .addRule(R.factorial, (lexeme: string, ...ops: Op[]) => {
     return ['FACTORIAL', ...ops]
   })
+  .addRule(R.maybe, () => {
+    return 'MAYBE'
+  })
+  .addRule(R.maybeWeighted, (lexeme: string, ...ops: Op[]) => {
+    return ['MAYBE_WEIGHTED', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -327,6 +333,17 @@ export const parse = (tokens: Op[]) => {
         type: 'FACTORIAL',
         val: consume(),
       })
+    },
+    MAYBE: () => {
+      ast.push({
+        type: 'MAYBE'
+      })
+    },
+    MAYBE_WEIGHTED: () => {
+      ast.push({
+        type: 'MAYBE_WEIGHTED',
+        val: consume(),
+      })
     }
   }
 
@@ -451,6 +468,12 @@ export const transpile = (ast: AstLeaf[]) => {
         }
         return res
       })()`
+    },
+    MAYBE: () => {
+      return `Math.random() < 0.5) {`
+    },
+    MAYBE_WEIGHTED: (leaf: AstLeaf) => {
+      return `Math.random() < ${leaf.val}) {`
     }
   }
   ast.forEach(leaf => {

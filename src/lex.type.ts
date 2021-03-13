@@ -26,7 +26,9 @@ export type Token =
   'ESTIMATE' |
   'ESTIMATE_PRECISE' |
   'DIV_REMAIN' |
-  'FACTORIAL'
+  'FACTORIAL' |
+  'MAYBE' |
+  'MAYBE_WEIGHTED'
 
 export type Op = Token | string | number
 
