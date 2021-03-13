@@ -137,6 +137,14 @@ if (z > 0, z < 10) {
 }
 ```
 
+To simplify syntax, you can use the `≠` character to represent not-equals.
+
+```
+if (x ≠ 2) {
+    // X is not 2
+}
+```
+
 ## Arrays
 
 ### Range Selection

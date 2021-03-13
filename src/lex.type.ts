@@ -21,7 +21,8 @@ export type Token =
   'ATOM_INSTANTIATION' |
   'ATOM_PRINT' |
   'RANGE' |
-  'ARRAY_ARITHMETIC'
+  'ARRAY_ARITHMETIC' |
+  'NEQUAL'
 
 export type Op = Token | string | number
 

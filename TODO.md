@@ -38,7 +38,6 @@ jawn y := {
 [ ] Tilde estimate operator
 [ ] Factorial operator
 [ ] Maybe function
-[ ] Array arithmetic
 [ ] Integer/Remainder division
 [ ] Magnitude greater/less-than operator
 [ ] Updated bit-shift (>>> and <<<)

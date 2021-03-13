@@ -93,6 +93,9 @@ grammar
   .addRule(R.rangeArith, (lexeme: string, ...ops: Op[]) => {
     return ['ARRAY_ARITHMETIC', ...ops]
   })
+  .addRule(R.nequals, (lexeme: string, ...ops: Op[]) => {
+    return 'NEQUAL'
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -280,6 +283,11 @@ export const parse = (tokens: Op[]) => {
         val: consume(),
       })
     },
+    NEQUAL: () => {
+      ast.push({
+        type: 'NEQUAL'
+      })
+    }
   }
 
   while (peek() !== 'EOF') {
@@ -382,6 +390,9 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     ARRAY_ARITHMETIC: (leaf: AstLeaf) => {
       return `${leaf.var}.map(n => n ${leaf.method} ${leaf.val})`
+    },
+    NEQUAL: () => {
+      return `!==`
     }
   }
   ast.forEach(leaf => {
