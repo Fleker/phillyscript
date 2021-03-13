@@ -17,10 +17,10 @@ console.log(x)
 console.log(z ~ Bird)
 
 if (y == 2, 4) {
-    console.log(x)
+    console.log('y is one of our values')
 }
 
 if (x > 0, < 5) {
-    console.log(x)
+    console.log('x is in our range')
 }
 

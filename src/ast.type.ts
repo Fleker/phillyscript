@@ -17,7 +17,8 @@ export type AstType =
   'VAR_CALL' |
   'COND_INIT' |
   'COND_MANY_SINGLE_OPERATOR' |
-  'COND_MANY_MANY_OPERATOR'
+  'COND_MANY_MANY_OPERATOR' |
+  'STATIC_STRING'
 
 export interface AstLeaf {
   type: AstType,

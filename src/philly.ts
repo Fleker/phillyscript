@@ -78,6 +78,9 @@ grammar
   .addRule(R.conditionalManyEquals, (lexeme: string, ...ops: Op[]) => {
     return ['COND_MANY_SINGLE_OPERATOR', ...ops]
   })
+  .addRule(R.staticString, (lexeme: string, ...ops: Op[]) => {
+    return ['STATIC_STRING', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -228,6 +231,13 @@ export const parse = (tokens: Op[]) => {
         callee: consume(),
         params: consume(),
       })
+    },
+    STATIC_STRING: () => {
+      ast.push({
+        type: 'STATIC_STRING',
+        method: consume(),
+        val: consume(),
+      })
     }
   }
 
@@ -308,6 +318,9 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     COND_MANY_MANY_OPERATOR: (leaf: AstLeaf) => {
       return `${leaf.var} ${leaf.method} ${leaf.val} || ${leaf.var} ${leaf.callee} ${leaf.params}) {`
+    },
+    STATIC_STRING: (leaf: AstLeaf) => {
+      return `${leaf.method}${leaf.val}${leaf.method}`
     }
   }
   ast.forEach(leaf => {

@@ -16,7 +16,8 @@ export type Token =
   'VAR_CALL' |
   'COND_INIT' |
   'COND_MANY_SINGLE_OPERATOR' |
-  'COND_MANY_MANY_OPERATOR'
+  'COND_MANY_MANY_OPERATOR' |
+  'STATIC_STRING'
 
 export type Op = Token | string | number
 
