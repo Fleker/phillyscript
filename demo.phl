@@ -15,3 +15,12 @@ jawn* y := 2
 jawn z @ Bird
 console.log(x)
 console.log(z ~ Bird)
+
+if (y == 2, 4) {
+    console.log(x)
+}
+
+if (x > 0, < 5) {
+    console.log(x)
+}
+

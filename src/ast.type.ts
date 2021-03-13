@@ -14,7 +14,10 @@ export type AstType =
   'RETURN' |
   'VAR' |
   'VAR_MUT' |
-  'VAR_CALL'
+  'VAR_CALL' |
+  'COND_INIT' |
+  'COND_MANY_SINGLE_OPERATOR' |
+  'COND_MANY_MANY_OPERATOR'
 
 export interface AstLeaf {
   type: AstType,

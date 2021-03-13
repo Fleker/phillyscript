@@ -26,7 +26,6 @@ jawn a := Bird({
 ## Execution Flow
 
 [ ] Define execution blocks without function syntax
-[ ] Multiple matches for a conditional
 
 ```
 jawn y := {

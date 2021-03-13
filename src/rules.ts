@@ -1,4 +1,14 @@
+/**
+ * Enforce title case
+ */
+
 const CLASS = '[A-Z][a-z]*'
+/**
+ * Enforce camelcase
+ */
+const VARIABLE = `[a-z]+(?:[A-Z][a-z])*`
+
+const condOp = '(?:===|<=|>=|>|<|!==|==|!=)'
 
 export const closeCurly = new RegExp('}')
 export const functionNoParam = new RegExp('fun(#)? (.*) {')
@@ -13,3 +23,6 @@ export const classInstantiation = new RegExp(`jawn (.*) @ (${CLASS})`)
 export const classExtension = new RegExp(`boul (${CLASS}) <- (${CLASS}) {`)
 export const variableInstanceOf = new RegExp(`([a-z]+) ~ (${CLASS})`)
 export const variable = new RegExp('([a-z]+)')
+export const conditionalInit = new RegExp('if \\(')
+export const conditionalManyEquals = new RegExp(`(${VARIABLE}) (${condOp}) (.*)+\\) {`)
+export const conditionalManyOperators = new RegExp(`(${VARIABLE}) (${condOp}) (.*)+, (${condOp}) (.*)+\\) {`)

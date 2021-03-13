@@ -69,6 +69,15 @@ grammar
   .addRule(R.variable, (lexeme: string, ...ops: Op[]) => {
     return ['VAR_CALL', ...ops]
   })
+  .addRule(R.conditionalInit, (lexeme: string, ...ops: Op[]) => {
+    return ['COND_INIT', ...ops]
+  })
+  .addRule(R.conditionalManyOperators, (lexeme: string, ...ops: Op[]) => {
+    return ['COND_MANY_MANY_OPERATOR', ...ops]
+  })
+  .addRule(R.conditionalManyEquals, (lexeme: string, ...ops: Op[]) => {
+    return ['COND_MANY_SINGLE_OPERATOR', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -197,6 +206,29 @@ export const parse = (tokens: Op[]) => {
         var: consume(),
       })
     },
+    COND_INIT: () => {
+      ast.push({
+        type: 'COND_INIT'
+      })
+    },
+    COND_MANY_SINGLE_OPERATOR: () => {
+      ast.push({
+        type: 'COND_MANY_SINGLE_OPERATOR',
+        var: consume(),
+        method: consume(),
+        val: consume(),
+      })
+    },
+    COND_MANY_MANY_OPERATOR: () => {
+      ast.push({
+        type: 'COND_MANY_MANY_OPERATOR',
+        var: consume(),
+        method: consume(),
+        val: consume(),
+        callee: consume(),
+        params: consume(),
+      })
+    }
   }
 
   while (peek() !== 'EOF') {
@@ -265,6 +297,18 @@ export const transpile = (ast: AstLeaf[]) => {
     VAR_CALL: (leaf: AstLeaf) => {
       return `${leaf.var}`
     },
+    COND_INIT: () => {
+      return `if (`
+    },
+    COND_MANY_SINGLE_OPERATOR: (leaf: AstLeaf) => {
+      return (leaf.val as string).split(',')
+        .map(x => x.trim())
+        .map(x => `${leaf.var} ${leaf.method} ${x}`)
+        .join(' || ') + ') {'
+    },
+    COND_MANY_MANY_OPERATOR: (leaf: AstLeaf) => {
+      return `${leaf.var} ${leaf.method} ${leaf.val} || ${leaf.var} ${leaf.callee} ${leaf.params}) {`
+    }
   }
   ast.forEach(leaf => {
     transpilation += transpilers[leaf.type](leaf)

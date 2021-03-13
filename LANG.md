@@ -96,3 +96,28 @@ z ~ Bird
 // Returns false
 z ~ Duck
 ```
+
+## Flow Control
+
+### Conditionals
+
+For a given variable, a condition can be created with two distinct checks
+without having to formally create two OR checks.
+
+```
+jawn y = 2
+
+if (y == 2, 4) {
+    // Returns true if y is 2 OR y is 4
+}
+```
+
+This can also be written with two different checks.
+
+```
+jawn z = 4
+
+if (z > 0, z < 10) {
+    // z is within our desired range
+}
+```
