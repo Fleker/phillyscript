@@ -114,6 +114,15 @@ grammar
   .addRule(R.maybeWeighted, (lexeme: string, ...ops: Op[]) => {
     return ['MAYBE_WEIGHTED', ...ops]
   })
+  .addRule(R.magnitude, (lexeme: string, ...ops: Op[]) => {
+    return ['MAGNITUDE', ...ops]
+  })
+  .addRule(R.magnitude2, (lexeme: string, ...ops: Op[]) => {
+    return ['MAGNITUDE_PRECISE', ...ops]
+  })
+  .addRule(R.bitshift, (lexeme: string, ...ops: Op[]) => {
+    return ['BITSHIFT', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -344,6 +353,31 @@ export const parse = (tokens: Op[]) => {
         type: 'MAYBE_WEIGHTED',
         val: consume(),
       })
+    },
+    MAGNITUDE: () => {
+      ast.push({
+        type: 'MAGNITUDE',
+        var: consume(),
+        method: consume(),
+        val: consume(),
+      })
+    },
+    MAGNITUDE_PRECISE: () => {
+      ast.push({
+        type: 'MAGNITUDE_PRECISE',
+        var: consume(),
+        method: consume(),
+        params: consume(),
+        val: consume(),
+      })
+    },
+    BITSHIFT: () => {
+      ast.push({
+        type: 'BITSHIFT',
+        var: consume(),
+        method: consume(),
+        val: consume(),
+      })
     }
   }
 
@@ -474,6 +508,25 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     MAYBE_WEIGHTED: (leaf: AstLeaf) => {
       return `Math.random() < ${leaf.val}) {`
+    },
+    MAGNITUDE: (leaf: AstLeaf) => {
+      if (leaf.method === '<<') {
+        // Much less-than
+        return `${leaf.var} * 10 < ${leaf.val}`
+      }
+      // Much greater-than
+      return `${leaf.var} > 10 * ${leaf.val}`
+    },
+    MAGNITUDE_PRECISE: (leaf: AstLeaf) => {
+      if (leaf.method === '<') {
+        // Much less-than
+        return `${leaf.var} * ${leaf.params} < ${leaf.val}`
+      }
+      // Much greater-than
+      return `${leaf.var} > ${leaf.params} * ${leaf.val}`
+    },
+    BITSHIFT: (leaf: AstLeaf) => {
+      return `${leaf.var} ${leaf.method} ${leaf.val}`
     }
   }
   ast.forEach(leaf => {

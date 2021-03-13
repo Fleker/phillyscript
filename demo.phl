@@ -48,3 +48,7 @@ if (maybe) {
 if (maybe(0.25)) {
     console.log('This returns true a quarter of the time')
 }
+
+console.log(101 >> 10)
+console.log(60 >4> 20)
+console.log(2 .<< 4)

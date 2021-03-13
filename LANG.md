@@ -176,6 +176,24 @@ if (maybe(0.25)) {
 }
 ```
 
+#### Magnitude Comparisons
+
+The number *101* is much greater than *10*. To represent that, mathematics
+often uses the double less-than/greater-than symbol:
+
+```
+// Prints 'true'
+console.log(101 >> 10)
+```
+
+By default, this is true if the operand is an order of magnitude larger (x10).
+However, it can be customized by appending another operand in the middle:
+
+```
+// Prints 'false'
+console.log(60 <4< 20)
+```
+
 ## Operations
 
 ### Division with Remainder
@@ -196,6 +214,16 @@ Appending the exclamation mark after a number will compute its factorial.
 ```
 // Prints 120
 console.log(5!)
+```
+
+#### Bit-Shifting
+
+As the double-carat syntax is now used for magnitude comparisons, the bit-shift
+operation now requires a dot in front:
+
+```
+// Prints '32'
+console.log(2 .<< 4)
 ```
 
 ## Arrays

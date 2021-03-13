@@ -29,7 +29,10 @@ export type AstType =
   'DIV_REMAIN' |
   'FACTORIAL' |
   'MAYBE' |
-  'MAYBE_WEIGHTED'
+  'MAYBE_WEIGHTED' |
+  'MAGNITUDE' |
+  'MAGNITUDE_PRECISE' |
+  'BITSHIFT'
 
 export interface AstLeaf {
   type: AstType,

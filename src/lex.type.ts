@@ -28,7 +28,10 @@ export type Token =
   'DIV_REMAIN' |
   'FACTORIAL' |
   'MAYBE' |
-  'MAYBE_WEIGHTED'
+  'MAYBE_WEIGHTED' |
+  'MAGNITUDE' |
+  'MAGNITUDE_PRECISE' |
+  'BITSHIFT'
 
 export type Op = Token | string | number
 

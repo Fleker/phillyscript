@@ -26,6 +26,7 @@ jawn a := Bird({
 ## Execution Flow
 
 [ ] Define execution blocks without function syntax
+[ ] Print => console.logs
 
 ```
 jawn y := {
@@ -35,9 +36,6 @@ jawn y := {
 
 ## Mathematic operators
 
-[ ] Maybe function
-[ ] Magnitude greater/less-than operator
-[ ] Updated bit-shift (>>> and <<<)
 [ ] Improved power syntax
 [ ] Range accessors with undefined start/end
 
