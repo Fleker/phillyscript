@@ -31,7 +31,9 @@ export type Token =
   'MAYBE_WEIGHTED' |
   'MAGNITUDE' |
   'MAGNITUDE_PRECISE' |
-  'BITSHIFT'
+  'BITSHIFT' |
+  'POWER' |
+  'XOR'
 
 export type Op = Token | string | number
 

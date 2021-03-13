@@ -216,7 +216,7 @@ Appending the exclamation mark after a number will compute its factorial.
 console.log(5!)
 ```
 
-#### Bit-Shifting
+### Bit-Shifting
 
 As the double-carat syntax is now used for magnitude comparisons, the bit-shift
 operation now requires a dot in front:
@@ -224,6 +224,26 @@ operation now requires a dot in front:
 ```
 // Prints '32'
 console.log(2 .<< 4)
+```
+
+### Exponentials
+
+Raising a number to another number uses the mathematical carat symbol, to
+suggest superscript:
+
+```
+// Prints '49'
+console.log(7^2)
+```
+
+### XOR
+
+As the standard symbol for XOR is now used for exponentials, a new syntax
+with the character `x` and the straight pipe `|` are joined together:
+
+```
+// Prints '1'
+console.log(3 x| 2)
 ```
 
 ## Arrays

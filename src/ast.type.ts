@@ -32,7 +32,9 @@ export type AstType =
   'MAYBE_WEIGHTED' |
   'MAGNITUDE' |
   'MAGNITUDE_PRECISE' |
-  'BITSHIFT'
+  'BITSHIFT' |
+  'POWER' |
+  'XOR'
 
 export interface AstLeaf {
   type: AstType,

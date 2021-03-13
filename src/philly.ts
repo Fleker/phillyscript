@@ -123,6 +123,12 @@ grammar
   .addRule(R.bitshift, (lexeme: string, ...ops: Op[]) => {
     return ['BITSHIFT', ...ops]
   })
+  .addRule(R.power, (lexeme: string, ...ops: Op[]) => {
+    return ['POWER', ...ops]
+  })
+  .addRule(R.xor, (lexeme: string, ...ops: Op[]) => {
+    return ['XOR', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -378,11 +384,29 @@ export const parse = (tokens: Op[]) => {
         method: consume(),
         val: consume(),
       })
+    },
+    POWER: () => {
+      ast.push({
+        type: 'POWER',
+        var: consume(),
+        val: consume(),
+      })
+    },
+    XOR: () => {
+      ast.push({
+        type: 'XOR',
+        var: consume(),
+        val: consume(),
+      })
     }
   }
 
   while (peek() !== 'EOF') {
-    parsers[consume() as Token]()
+    try {
+      parsers[consume() as Token]()
+    } catch (e) {
+      throw new Error(`Cannot get parse next token "${peek()}" at index ${c} for ${tokens.join(', ')}`)
+    }
   }
 
   return ast
@@ -527,6 +551,12 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     BITSHIFT: (leaf: AstLeaf) => {
       return `${leaf.var} ${leaf.method} ${leaf.val}`
+    },
+    POWER: (leaf: AstLeaf) => {
+      return `${leaf.var} ** ${leaf.val}`
+    },
+    XOR: (leaf: AstLeaf) => {
+      return `${leaf.var} ^ ${leaf.val}`
     }
   }
   ast.forEach(leaf => {

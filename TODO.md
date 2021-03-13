@@ -36,7 +36,6 @@ jawn y := {
 
 ## Mathematic operators
 
-[ ] Improved power syntax
 [ ] Range accessors with undefined start/end
 
 ```
