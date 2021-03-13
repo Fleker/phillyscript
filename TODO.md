@@ -35,9 +35,7 @@ jawn y := {
 
 ## Mathematic operators
 
-[ ] Factorial operator
 [ ] Maybe function
-[ ] Integer/Remainder division
 [ ] Magnitude greater/less-than operator
 [ ] Updated bit-shift (>>> and <<<)
 [ ] Improved power syntax

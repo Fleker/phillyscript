@@ -105,6 +105,9 @@ grammar
   .addRule(R.remainderDivision, (lexeme: string, ...ops: Op[]) => {
     return ['DIV_REMAIN', ...ops]
   })
+  .addRule(R.factorial, (lexeme: string, ...ops: Op[]) => {
+    return ['FACTORIAL', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -318,6 +321,12 @@ export const parse = (tokens: Op[]) => {
         var: consume(),
         val: consume(),
       })
+    },
+    FACTORIAL: () => {
+      ast.push({
+        type: 'FACTORIAL',
+        val: consume(),
+      })
     }
   }
 
@@ -433,6 +442,15 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     DIV_REMAIN: (leaf: AstLeaf) => {
       return `[Math.floor(${leaf.var} / ${leaf.val}), ${leaf.var} % ${leaf.val}]`
+    },
+    FACTORIAL: (leaf: AstLeaf) => {
+      return `(() => {
+        let res = 1
+        for (let i = 1; i <= ${leaf.val}; i++) {
+          res *= i
+        }
+        return res
+      })()`
     }
   }
   ast.forEach(leaf => {

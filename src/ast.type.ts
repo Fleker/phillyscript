@@ -26,7 +26,8 @@ export type AstType =
   'NEQUAL' |
   'ESTIMATE' |
   'ESTIMATE_PRECISE' |
-  'DIV_REMAIN'
+  'DIV_REMAIN' |
+  'FACTORIAL'
 
 export interface AstLeaf {
   type: AstType,

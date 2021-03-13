@@ -25,7 +25,8 @@ export type Token =
   'NEQUAL' |
   'ESTIMATE' |
   'ESTIMATE_PRECISE' |
-  'DIV_REMAIN'
+  'DIV_REMAIN' |
+  'FACTORIAL'
 
 export type Op = Token | string | number
 
