@@ -24,5 +24,8 @@ if (x > 0, < 5) {
     console.log('x is in our range')
 }
 
-jawn a := :hello
+jawn a := :symbolic
 console.log(:a:)
+
+jawn b := "Hello World"
+console.log(b[0:5])

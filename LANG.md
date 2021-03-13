@@ -136,3 +136,16 @@ if (z > 0, z < 10) {
     // z is within our desired range
 }
 ```
+
+## Arrays
+
+### Range Selection
+
+For both strings and arrays, ranges can be selected in a way similar to the
+Python syntax:
+
+```
+jawn b := 'Hello World'
+// Prints 'Hello'
+console.log(b[0:5])
+```

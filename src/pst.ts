@@ -14,7 +14,7 @@ if (step === undefined) {
 } else if (step === 'print') {
   console.log(program)
 } else if (step === 'lex') {
-  console.log(lex(program))
+  console.log(...lex(program))
 } else if (step === 'parse') {
-  console.log(parse(lex(program)))
+  console.log(...parse(lex(program)))
 }

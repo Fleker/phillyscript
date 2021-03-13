@@ -57,6 +57,9 @@ grammar
   .addRule(R.method, (lexeme: string, ...ops: Op[]) => {
     return ['METHOD', ...nullable(ops)]
   })
+  .addRule(R.rangeSyntax, (lexeme: string, ...ops: Op[]) => {
+    return ['RANGE', ...ops]
+  })
   .addRule(R.returnStatement, (lexeme: string, ...ops: Op[]) => {
     return ['RETURN', ...ops]
   })
@@ -257,6 +260,14 @@ export const parse = (tokens: Op[]) => {
         type: 'ATOM_PRINT',
         var: consume(),
       })
+    },
+    RANGE: () => {
+      ast.push({
+        type: 'RANGE',
+        var: consume(),
+        val: consume(),
+        method: consume(),
+      })
     }
   }
 
@@ -346,6 +357,17 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     ATOM_PRINT: (leaf: AstLeaf) => {
       return `Symbol.keyFor(${leaf.var})`
+    },
+    RANGE: (leaf: AstLeaf) => {
+      return `(() => {
+        if (Array.isArray(${leaf.var})) {
+          return ${leaf.var}.slice(${leaf.val}, ${leaf.method})
+        }
+        if (typeof ${leaf.var} === 'string') {
+          return ${leaf.var}.substring(${leaf.val}, ${leaf.method})
+        }
+        throw new Error('Cannot obtain range for "${leaf.var}"')
+      })()`
     }
   }
   ast.forEach(leaf => {

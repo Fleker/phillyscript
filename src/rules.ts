@@ -29,3 +29,4 @@ export const conditionalManyOperators = new RegExp(`(${VARIABLE}) (${condOp}) (.
 export const staticString = new RegExp(`('|"|\`)(.*)(?:'|"|\`)`)
 export const atomInstantiation = new RegExp('jawn ([a-z]) := :([a-z]*)')
 export const atomPrint = new RegExp(`:(${VARIABLE}):`)
+export const rangeSyntax = new RegExp(`(${VARIABLE})\\[(\\d+):(\\d+)\\]`)

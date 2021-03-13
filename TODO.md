@@ -36,7 +36,6 @@ jawn y := {
 ## Mathematic operators
 
 [ ] Tilde estimate operator
-[ ] String and array range accessors
 [ ] Factorial operator
 [ ] Maybe function
 [ ] Array arithmetic

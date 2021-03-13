@@ -19,7 +19,8 @@ export type Token =
   'COND_MANY_MANY_OPERATOR' |
   'STATIC_STRING' |
   'ATOM_INSTANTIATION' |
-  'ATOM_PRINT'
+  'ATOM_PRINT' |
+  'RANGE'
 
 export type Op = Token | string | number
 
