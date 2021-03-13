@@ -35,7 +35,6 @@ jawn y := {
 
 ## Mathematic operators
 
-[ ] Tilde estimate operator
 [ ] Factorial operator
 [ ] Maybe function
 [ ] Integer/Remainder division

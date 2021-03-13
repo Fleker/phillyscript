@@ -11,7 +11,7 @@ fun# asyncDemo {
 }
 
 jawn x := 1
-jawn* y := 2
+jawn* y := 4
 jawn z @ Bird
 console.log(x)
 console.log(z ~ Bird)
@@ -38,3 +38,4 @@ console.log('Hello' ≠ 'World')
 
 console.log(x ≈ 2)
 console.log(x ~10~ 2)
+console.log(y /% 3)

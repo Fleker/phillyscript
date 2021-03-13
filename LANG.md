@@ -161,6 +161,17 @@ if (x ~10~ 6) {
 }
 ```
 
+#### Division with Remainder
+
+The division-remainder operator can be used to return an array with the first
+element being the whole number and the second element being the remainder.
+
+```
+jawn x := 14
+// Prints '[3, 2]'
+console.log(x /% 4)
+```
+
 ## Arrays
 
 ### Range Selection

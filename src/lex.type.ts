@@ -24,7 +24,8 @@ export type Token =
   'ARRAY_ARITHMETIC' |
   'NEQUAL' |
   'ESTIMATE' |
-  'ESTIMATE_PRECISE'
+  'ESTIMATE_PRECISE' |
+  'DIV_REMAIN'
 
 export type Op = Token | string | number
 

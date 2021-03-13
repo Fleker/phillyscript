@@ -102,6 +102,9 @@ grammar
   .addRule(R.estimateOperator2, (lexeme: string, ...ops: Op[]) => {
     return ['ESTIMATE_PRECISE', ...ops]
   })
+  .addRule(R.remainderDivision, (lexeme: string, ...ops: Op[]) => {
+    return ['DIV_REMAIN', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -308,6 +311,13 @@ export const parse = (tokens: Op[]) => {
         method: consume(),
         val: consume(),
       })
+    },
+    DIV_REMAIN: () => {
+      ast.push({
+        type: 'DIV_REMAIN',
+        var: consume(),
+        val: consume(),
+      })
     }
   }
 
@@ -420,6 +430,9 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     ESTIMATE_PRECISE: (leaf: AstLeaf) => {
       return `Math.round(${leaf.var} / ${leaf.method}) === Math.round(${leaf.val} / ${leaf.method})`
+    },
+    DIV_REMAIN: (leaf: AstLeaf) => {
+      return `[Math.floor(${leaf.var} / ${leaf.val}), ${leaf.var} % ${leaf.val}]`
     }
   }
   ast.forEach(leaf => {
