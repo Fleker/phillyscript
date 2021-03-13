@@ -90,6 +90,9 @@ grammar
   .addRule(R.atomPrint, (lexeme: string, ...ops: Op[]) => {
     return ['ATOM_PRINT', ...ops]
   })
+  .addRule(R.rangeArith, (lexeme: string, ...ops: Op[]) => {
+    return ['ARRAY_ARITHMETIC', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -268,7 +271,15 @@ export const parse = (tokens: Op[]) => {
         val: consume(),
         method: consume(),
       })
-    }
+    },
+    ARRAY_ARITHMETIC: () => {
+      ast.push({
+        type: 'ARRAY_ARITHMETIC',
+        var: consume(),
+        method: consume(),
+        val: consume(),
+      })
+    },
   }
 
   while (peek() !== 'EOF') {
@@ -368,6 +379,9 @@ export const transpile = (ast: AstLeaf[]) => {
         }
         throw new Error('Cannot obtain range for "${leaf.var}"')
       })()`
+    },
+    ARRAY_ARITHMETIC: (leaf: AstLeaf) => {
+      return `${leaf.var}.map(n => n ${leaf.method} ${leaf.val})`
     }
   }
   ast.forEach(leaf => {

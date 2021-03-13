@@ -46,11 +46,6 @@ jawn y := {
 [ ] Improved power syntax
 
 ```
-jawn a := "Hello World"
-jawn b := a[1:3]
-jawn c := [1,2,3]
-jawn d := c[1:2]
-
 jawn e := c .* 3
 jawn f := d .+ 4
 

@@ -20,7 +20,8 @@ export type Token =
   'STATIC_STRING' |
   'ATOM_INSTANTIATION' |
   'ATOM_PRINT' |
-  'RANGE'
+  'RANGE' |
+  'ARRAY_ARITHMETIC'
 
 export type Op = Token | string | number
 

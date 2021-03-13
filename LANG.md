@@ -149,3 +149,16 @@ jawn b := 'Hello World'
 // Prints 'Hello'
 console.log(b[0:5])
 ```
+
+### Arithmetic
+
+Taking inspiration from Matlab, a dot-symbol syntax can be used to apply the
+mathematics operation across every element of an array.
+
+```
+jawn c := [0, 1, 2, 3]
+// Prints '[2, 3, 4, 5]`
+console.log(c .+ 2)
+// Prints '[0, 5, 10, 15]'
+console.log(c .* 5)
+```
