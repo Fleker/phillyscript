@@ -34,7 +34,8 @@ export type AstType =
   'MAGNITUDE_PRECISE' |
   'BITSHIFT' |
   'POWER' |
-  'XOR'
+  'XOR' |
+  'RANGE_LOOP'
 
 export interface AstLeaf {
   type: AstType,

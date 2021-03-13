@@ -33,7 +33,8 @@ export type Token =
   'MAGNITUDE_PRECISE' |
   'BITSHIFT' |
   'POWER' |
-  'XOR'
+  'XOR' |
+  'RANGE_LOOP'
 
 export type Op = Token | string | number
 

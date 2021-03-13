@@ -145,6 +145,29 @@ if (x ≠ 2) {
 }
 ```
 
+### For-Loops
+
+For-loops get an enhancement to improve the iteration process using an improved
+range syntax:
+
+```
+for (jawn i = 0:3) {
+    // Prints '0', '1', '2'
+    console.log(i)
+}
+```
+
+This iterates the variable `i` from [0-3), with *0* inclusive and *3* exclusive.
+
+This can also be paired with a particular step:
+
+```
+for (jawn i = 0:5:20) {
+    // Prints '0', '5', '10', '15'
+    console.log(i)
+}
+```
+
 #### Estimations
 
 Estimations, two values that would use a wavy equal sign, can be implemented

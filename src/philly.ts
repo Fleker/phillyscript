@@ -129,6 +129,9 @@ grammar
   .addRule(R.xor, (lexeme: string, ...ops: Op[]) => {
     return ['XOR', ...ops]
   })
+  .addRule(R.rangeLoop, (lexeme: string, ...ops: Op[]) => {
+    return ['RANGE_LOOP', ...nullable(ops)]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -398,7 +401,16 @@ export const parse = (tokens: Op[]) => {
         var: consume(),
         val: consume(),
       })
-    }
+    },
+    RANGE_LOOP: () => {
+      ast.push({
+        type: 'RANGE_LOOP',
+        var: consume(),
+        callee: consume(),
+        method: consume(),
+        val: consume(),
+      })
+    },
   }
 
   while (peek() !== 'EOF') {
@@ -557,6 +569,10 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     XOR: (leaf: AstLeaf) => {
       return `${leaf.var} ^ ${leaf.val}`
+    },
+    RANGE_LOOP: (leaf: AstLeaf) => {
+      // Right now we assume start < finish
+      return `for (let ${leaf.var} = ${leaf.callee}; ${leaf.var} < ${leaf.val}; ${leaf.var} += ${leaf.method || 1}) {`
     }
   }
   ast.forEach(leaf => {

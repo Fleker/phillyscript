@@ -56,3 +56,11 @@ console.log(60 >4> 20)
 console.log(2 .<< 4)
 console.log(7^2)
 console.log(3 x| 2)
+
+for (jawn i = 0:3) {
+    console.log(i)
+}
+
+for (jawn i = 0:5:20) {
+    console.log(i)
+}

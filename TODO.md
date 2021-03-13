@@ -34,32 +34,6 @@ jawn y := {
 }
 ```
 
-## Mathematic operators
-
-[ ] Range accessors with undefined start/end
-
-```
-jawn e := c .* 3
-jawn f := d .+ 4
-
-jawn g := 5 /% 2
-
-jawn h := 10
-jawn i := 101
-jawn j := h << i
-jawn k := h <2< i
-```
-
-## Loopers/Flow
-
-[ ] Better range syntax
-
-```
-for (jawn i = 0:5:100) {
-    console.log(i)
-}
-```
-
 ## Permissions
 
 [ ] Explicit permissions in libraries
