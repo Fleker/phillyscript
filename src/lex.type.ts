@@ -22,7 +22,9 @@ export type Token =
   'ATOM_PRINT' |
   'RANGE' |
   'ARRAY_ARITHMETIC' |
-  'NEQUAL'
+  'NEQUAL' |
+  'ESTIMATE' |
+  'ESTIMATE_PRECISE'
 
 export type Op = Token | string | number
 

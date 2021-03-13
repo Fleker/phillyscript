@@ -96,6 +96,12 @@ grammar
   .addRule(R.nequals, (lexeme: string, ...ops: Op[]) => {
     return 'NEQUAL'
   })
+  .addRule(R.estimateOperator, (lexeme: string, ...ops: Op[]) => {
+    return ['ESTIMATE', ...ops]
+  })
+  .addRule(R.estimateOperator2, (lexeme: string, ...ops: Op[]) => {
+    return ['ESTIMATE_PRECISE', ...ops]
+  })
   .addRule(/\s/, () => {
     return 'SPACE'
   })
@@ -287,6 +293,21 @@ export const parse = (tokens: Op[]) => {
       ast.push({
         type: 'NEQUAL'
       })
+    },
+    ESTIMATE: () => {
+      ast.push({
+        type: 'ESTIMATE',
+        var: consume(),
+        val: consume(),
+      })
+    },
+    ESTIMATE_PRECISE: () => {
+      ast.push({
+        type: 'ESTIMATE_PRECISE',
+        var: consume(),
+        method: consume(),
+        val: consume(),
+      })
     }
   }
 
@@ -393,6 +414,12 @@ export const transpile = (ast: AstLeaf[]) => {
     },
     NEQUAL: () => {
       return `!==`
+    },
+    ESTIMATE: (leaf: AstLeaf) => {
+      return `Math.round(${leaf.var}) === Math.round(${leaf.val})`
+    },
+    ESTIMATE_PRECISE: (leaf: AstLeaf) => {
+      return `Math.round(${leaf.var} / ${leaf.method}) === Math.round(${leaf.val} / ${leaf.method})`
     }
   }
   ast.forEach(leaf => {

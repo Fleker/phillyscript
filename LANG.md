@@ -120,7 +120,7 @@ For a given variable, a condition can be created with two distinct checks
 without having to formally create two OR checks.
 
 ```
-jawn y = 2
+jawn y := 2
 
 if (y == 2, 4) {
     // Returns true if y is 2 OR y is 4
@@ -130,7 +130,7 @@ if (y == 2, 4) {
 This can also be written with two different checks.
 
 ```
-jawn z = 4
+jawn z := 4
 
 if (z > 0, z < 10) {
     // z is within our desired range
@@ -142,6 +142,22 @@ To simplify syntax, you can use the `≠` character to represent not-equals.
 ```
 if (x ≠ 2) {
     // X is not 2
+}
+```
+
+#### Estimations
+
+Estimations, two values that would use a wavy equal sign, can be implemented
+with a tilde or the `≈` character.
+
+```
+jawn x := 5
+if (x ≈ 6) {
+    // x is not close to 6
+}
+if (x ~10~ 6) {
+    // We divide each side by the modifier and compare.
+    // x and 6 are close relative to 10.
 }
 ```
 

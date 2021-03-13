@@ -23,7 +23,9 @@ export type AstType =
   'ATOM_PRINT' |
   'RANGE' |
   'ARRAY_ARITHMETIC' |
-  'NEQUAL'
+  'NEQUAL' |
+  'ESTIMATE' |
+  'ESTIMATE_PRECISE'
 
 export interface AstLeaf {
   type: AstType,

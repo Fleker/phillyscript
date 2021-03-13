@@ -41,8 +41,8 @@ jawn y := {
 [ ] Integer/Remainder division
 [ ] Magnitude greater/less-than operator
 [ ] Updated bit-shift (>>> and <<<)
-[ ] Supported ≠ syntax
 [ ] Improved power syntax
+[ ] Range accessors with undefined start/end
 
 ```
 jawn e := c .* 3
