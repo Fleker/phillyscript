@@ -29,6 +29,8 @@ console.log(:a:)
 
 jawn b := "Hello World"
 console.log(b[0:5])
+console.log(b[:5])
+console.log(b[6:])
 
 jawn c := [0, 1, 2, 3]
 console.log(c .+ 1)

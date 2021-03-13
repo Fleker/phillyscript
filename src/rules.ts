@@ -29,7 +29,7 @@ export const conditionalManyOperators = new RegExp(`(${VARIABLE}) (${condOp}) (.
 export const staticString = new RegExp(`('|"|\`)(.*?)(?:'|"|\`)`)
 export const atomInstantiation = new RegExp('jawn ([a-z]) := :([a-z]*)')
 export const atomPrint = new RegExp(`:(${VARIABLE}):`)
-export const rangeSyntax = new RegExp(`(${VARIABLE})\\[(\\d+):(\\d+)\\]`)
+export const rangeSyntax = new RegExp(`(${VARIABLE})\\[(\\d+)?:(\\d+)?\\]`)
 export const rangeArith = new RegExp(`(${VARIABLE}) .(\\+|-|\\/|\\*) (.*)`)
 export const nequals = new RegExp('≠')
 export const estimateOperator = new RegExp(`(${VARIABLE}) [~≈] (\\d+)`)

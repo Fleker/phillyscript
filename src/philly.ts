@@ -58,7 +58,7 @@ grammar
     return ['METHOD', ...nullable(ops)]
   })
   .addRule(R.rangeSyntax, (lexeme: string, ...ops: Op[]) => {
-    return ['RANGE', ...ops]
+    return ['RANGE', ...nullable(ops)]
   })
   .addRule(R.returnStatement, (lexeme: string, ...ops: Op[]) => {
     return ['RETURN', ...ops]
@@ -495,10 +495,10 @@ export const transpile = (ast: AstLeaf[]) => {
     RANGE: (leaf: AstLeaf) => {
       return `(() => {
         if (Array.isArray(${leaf.var})) {
-          return ${leaf.var}.slice(${leaf.val}, ${leaf.method})
+          return ${leaf.var}.slice(${leaf.val} || 0, ${leaf.method} || ${leaf.var}.length)
         }
         if (typeof ${leaf.var} === 'string') {
-          return ${leaf.var}.substring(${leaf.val}, ${leaf.method})
+          return ${leaf.var}.substring(${leaf.val} || 0, ${leaf.method} || ${leaf.var}.length)
         }
         throw new Error('Cannot obtain range for "${leaf.var}"')
       })()`

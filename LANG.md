@@ -257,6 +257,8 @@ Python syntax:
 jawn b := 'Hello World'
 // Prints 'Hello'
 console.log(b[0:5])
+// Prints 'World'
+console.log(b[6:])
 ```
 
 ### Arithmetic
